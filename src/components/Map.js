@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, VStack, HStack, Flex } from '@chakra-ui/react';
+import { Text, VStack, Flex } from '@chakra-ui/react';
 import L from 'leaflet';
 import { Button } from '@chakra-ui/button';
 import {

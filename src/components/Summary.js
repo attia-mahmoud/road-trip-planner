@@ -30,6 +30,7 @@ const Summary = ({ destinationsState }) => {
                     as={FaStar}
                     color="yellow"
                     visibility={destination.favorite ? "visible" : "hidden"}
+                    
                   />
                     <Text fontSize="1.2em" m={1.5}>
                       {destination.name}

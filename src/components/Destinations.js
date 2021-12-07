@@ -16,7 +16,7 @@ import { Alert, AlertIcon } from '@chakra-ui/react';
 import { CloseButton } from '@chakra-ui/close-button';
 import { Icon } from '@chakra-ui/icon';
 import { ScaleFade } from '@chakra-ui/react';
-import { FaTrash, FaStar, FaLocationArrow, FaRegStar } from 'react-icons/fa';
+import { FaTrash, FaStar, FaLocationArrow } from 'react-icons/fa';
 import { deleteEntry } from '../utils/utils';
 import DeleteButton from './DeleteButton';
 
@@ -35,7 +35,6 @@ const Destinations = ({ destinationsState, positionState }) => {
             <Thead>
               <Tr>
                 <Th>Location</Th>
-                {/* <Th>Coordinates</Th> */}
                 <Th></Th>
                 <Th></Th>
               </Tr>
@@ -48,11 +47,12 @@ const Destinations = ({ destinationsState, positionState }) => {
                       <Icon
                         as={FaStar}
                         cursor="pointer"
-                        color={destination.favorite ? 'yellow' : 'white'}
+                        color={destination.favorite ? 'yellow' : 'gray.200'}
                         _hover={{
                           color: 'yellow',
                         }}
                         onClick={() => {
+                          
                           let items = [...allDestinations];
 
                           let item = { ...destination };
@@ -86,10 +86,7 @@ const Destinations = ({ destinationsState, positionState }) => {
                       color="green"
                     />
                   </Td>
-                  {/* <Td>
-                    Lat: {Math.round(destination.LatLng.lat * 100) / 100}, Lng:{' '}
-                    {Math.round(destination.LatLng.lng * 100) / 100}
-                  </Td> */}
+
 
                   <Td>
                     <Icon
@@ -112,7 +109,7 @@ const Destinations = ({ destinationsState, positionState }) => {
           </Table>
           <Spacer />
           <DeleteButton setDestinations={setDestinations} />
-          <Box minH="10em">
+          <Box minH="3em">
             {isOpen && (
               <ScaleFade initialScale={0.9} in={isOpen}>
                 <Alert
@@ -139,3 +136,4 @@ const Destinations = ({ destinationsState, positionState }) => {
 };
 
 export default Destinations;
+
