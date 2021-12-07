@@ -95,6 +95,7 @@ const saveLocation = async (
         distance: distance,
         duration: duration,
         POI: POI,
+        favorite: false,
       },
     ])
   );

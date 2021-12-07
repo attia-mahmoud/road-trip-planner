@@ -16,10 +16,9 @@ import { Alert, AlertIcon } from '@chakra-ui/react';
 import { CloseButton } from '@chakra-ui/close-button';
 import { Icon } from '@chakra-ui/icon';
 import { ScaleFade } from '@chakra-ui/react';
-import { FaTrash } from 'react-icons/fa';
+import { FaTrash, FaStar, FaLocationArrow, FaRegStar } from 'react-icons/fa';
 import { deleteEntry } from '../utils/utils';
 import DeleteButton from './DeleteButton';
-import { FaLocationArrow } from 'react-icons/fa';
 
 const Destinations = ({ destinationsState, positionState }) => {
   const [position, setPosition] = positionState;
@@ -36,7 +35,8 @@ const Destinations = ({ destinationsState, positionState }) => {
             <Thead>
               <Tr>
                 <Th>Location</Th>
-                <Th>Coordinates</Th>
+                {/* <Th>Coordinates</Th> */}
+                <Th></Th>
                 <Th></Th>
               </Tr>
             </Thead>
@@ -45,22 +45,55 @@ const Destinations = ({ destinationsState, positionState }) => {
                 <Tr key={index}>
                   <Td>
                     <HStack>
-                      <Text>{destination.name}</Text>
                       <Icon
-                        as={FaLocationArrow}
-                        onClick={() => setPosition(destination.LatLng)}
+                        as={FaStar}
                         cursor="pointer"
-                        color="green"
+                        color={destination.favorite ? 'yellow' : 'white'}
+                        _hover={{
+                          color: 'yellow',
+                        }}
+                        onClick={() => {
+                          let items = [...allDestinations];
+
+                          let item = { ...destination };
+
+                          item.favorite = !item.favorite;
+
+                          items[index] = item;
+
+                          localStorage.setItem(
+                            'my_destinations',
+                            JSON.stringify(items)
+                          );
+                          setDestinations(items);
+                        }}
                       />
+                      <Text>{destination.name}</Text>
                     </HStack>
                   </Td>
                   <Td>
+                    <Icon
+                      as={FaLocationArrow}
+                      onClick={() => {
+                        setPosition(destination.LatLng);
+                        document.getElementById('map').scrollIntoView({
+                          top: 0,
+                          left: 0,
+                          behavior: 'smooth',
+                        });
+                      }}
+                      cursor="pointer"
+                      color="green"
+                    />
+                  </Td>
+                  {/* <Td>
                     Lat: {Math.round(destination.LatLng.lat * 100) / 100}, Lng:{' '}
                     {Math.round(destination.LatLng.lng * 100) / 100}
-                  </Td>
+                  </Td> */}
 
                   <Td>
-                    <FaTrash
+                    <Icon
+                      as={FaTrash}
                       onClick={() => {
                         deleteEntry(
                           destination,

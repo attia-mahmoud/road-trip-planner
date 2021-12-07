@@ -37,6 +37,39 @@ const Summary = ({ destinationsState }) => {
                     fontWeight="600"
                     fontSize="1.1em"
                   >
+                    Location Details
+                  </Text>
+                  <Flex
+                    justify="space-around"
+                    w="100%"
+                    wrap="wrap"
+                    flexDirection={['column', 'row']}
+                  >
+                    <Stat m={['10', 0]}>
+                      <StatLabel>Longitude</StatLabel>
+                      <StatNumber>
+                        {Math.round(destination.LatLng.lat * 100) / 100}
+                      </StatNumber>
+                      <StatHelpText>Degrees</StatHelpText>
+                    </Stat>
+                    <Stat>
+                      <StatLabel>Latitude</StatLabel>
+                      <StatNumber>
+                        {Math.round(destination.LatLng.lng * 100) / 100}
+                      </StatNumber>
+                      <StatHelpText>Degrees</StatHelpText>
+                    </Stat>
+                  </Flex>
+                </VStack>
+                {/* trip details */}
+                <VStack mt="10">
+                  <Text
+                    as="h2"
+                    textAlign="left"
+                    w="100%"
+                    fontWeight="600"
+                    fontSize="1.1em"
+                  >
                     Trip Details
                   </Text>
                   <Flex
@@ -70,9 +103,9 @@ const Summary = ({ destinationsState }) => {
                     {destination.POI && 'Nearby Points of Interest'}
                   </Text>
                   <Flex wrap="wrap">
-                    {destination.POI?.map(point => {
+                    {destination.POI?.map((point, index) => {
                       return (
-                        <Stat m="10">
+                        <Stat m="10" key={index}>
                           <StatLabel fontSize="0.8em" fontStyle="italic">
                             {point.type.toUpperCase()}
                           </StatLabel>

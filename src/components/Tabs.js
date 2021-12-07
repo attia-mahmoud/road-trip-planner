@@ -14,8 +14,14 @@ const Tabs = ({ destinationsState, positionState }) => {
   const allDestinations = JSON.parse(localStorage.getItem('my_destinations'));
 
   return (
-    <div>
-      <ChTabs align="center" isFitted w={['90vw', '55vw']}>
+    <div id="tabs">
+      <ChTabs
+        align="center"
+        isFitted
+        w={['90vw', '55vw']}
+        variant="enclosed"
+        size="lg"
+      >
         <TabList>
           <Tab>All Destinations</Tab>
           <Tab>Destination Summaries</Tab>
@@ -24,10 +30,21 @@ const Tabs = ({ destinationsState, positionState }) => {
         <TabPanels>
           <TabPanel>
             {allDestinations ? (
-              <Destinations
-                destinationsState={destinationsState}
-                positionState={positionState}
-              />
+              <>
+                <Text
+                  fontSize="3xl"
+                  textAlign="left"
+                  fontWeight="600"
+                  mt="5"
+                  mb="5"
+                >
+                  {allDestinations.length} Pins
+                </Text>
+                <Destinations
+                  destinationsState={destinationsState}
+                  positionState={positionState}
+                />
+              </>
             ) : (
               <Text as="h1">Add a Destination</Text>
             )}

@@ -69,7 +69,7 @@ const Map = ({ destinationsState, positionState }) => {
         // setPosition(e.latlng);
         map.flyTo(e.latlng, 12);
       });
-    }, []);
+    }, [map]);
 
     React.useEffect(() => {
       if (!position) return;
@@ -96,6 +96,9 @@ const Map = ({ destinationsState, positionState }) => {
     e.preventDefault();
     await saveLocation(position, userLocation, destinations, setDestinations);
     setIsLoading(false);
+    document
+      .getElementById('tabs')
+      .scrollIntoView({ top: 0, left: 0, behavior: 'smooth' });
   }
 
   return (
@@ -121,28 +124,33 @@ const Map = ({ destinationsState, positionState }) => {
             : `Navigate the map to add a location`}
         </Button>
       </VStack>
-      <MapContainer
-        center={{
-          lat: 52.52437,
-          lng: 13.41053,
-        }}
-        zoom={12}
-      >
-        <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-        />
-        {destinations.map((destination, index) => {
-          return (
-            <Marker position={destination.LatLng} key={`${position}, ${index}`}>
-              <Popup>
-                {destination.LatLng.lat}, {destination.LatLng.lng}
-              </Popup>
-            </Marker>
-          );
-        })}
-        <LocationMarker />
-      </MapContainer>
+      <div id="map">
+        <MapContainer
+          center={{
+            lat: 52.52437,
+            lng: 13.41053,
+          }}
+          zoom={12}
+        >
+          <TileLayer
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          />
+          {destinations.map((destination, index) => {
+            return (
+              <Marker
+                position={destination.LatLng}
+                key={`${position}, ${index}`}
+              >
+                <Popup>
+                  {destination.LatLng.lat}, {destination.LatLng.lng}
+                </Popup>
+              </Marker>
+            );
+          })}
+          <LocationMarker />
+        </MapContainer>
+      </div>
     </>
   );
 };
