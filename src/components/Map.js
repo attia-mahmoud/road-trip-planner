@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, VStack } from '@chakra-ui/react';
+import { Text, VStack, HStack, Flex } from '@chakra-ui/react';
 import L from 'leaflet';
 import { Button } from '@chakra-ui/button';
 import {
@@ -35,7 +35,8 @@ const Map = ({ destinationsState, positionState }) => {
   //   get the location name to display the moment user clicks the map
   React.useEffect(() => {
     if (!position) return;
-    setName('Fetching Location Name...');
+    setIsLoading(true)
+    // setName('Fetching Location Name...');
     const lat = position.lat;
     const lng = position.lng;
 
@@ -57,6 +58,7 @@ const Map = ({ destinationsState, positionState }) => {
     };
 
     fetchData();
+    setIsLoading(false)
   }, [position]);
 
   function LocationMarker() {
@@ -102,29 +104,8 @@ const Map = ({ destinationsState, positionState }) => {
   }
 
   return (
-    <>
-      <VStack>
-        <Text>{!position && 'Choose a location to get started!'}</Text>
-        {name && <Text>{name}</Text>}
-        {position && (
-          <Text>
-            Latitude: {Math.round(position.lat, 1)}, Longitude:{' '}
-            {Math.round(position.lng)}
-          </Text>
-        )}
-        <Button
-          colorScheme={position && position !== userLocation && 'green'}
-          onClick={addDestination}
-          disabled={position && position !== userLocation ? false : true}
-          isLoading={isLoading}
-          loadingText="Loading"
-        >
-          {position && position !== userLocation
-            ? `Save Location`
-            : `Navigate the map to add a location`}
-        </Button>
-      </VStack>
-      <div id="map">
+    <Flex direction={["column", "row"]} flexBasis="0" justify="space-around">
+      <div id="map" style={{order: 1,}}>
         <MapContainer
           center={{
             lat: 52.52437,
@@ -151,7 +132,28 @@ const Map = ({ destinationsState, positionState }) => {
           <LocationMarker />
         </MapContainer>
       </div>
-    </>
+      <VStack order={[0, 1]} mb={["10", null]} ml={[null, "10"]} alignSelf="center">
+        <Text  fontSize={[null, "3xl"]}>{!position && 'Choose a location to get started!'}</Text>
+        {name && <Text fontSize={[null, "3xl"]} >{name}</Text>}
+        {position && (
+          <Text>
+            Latitude: {Math.round(position.lat, 1)}, Longitude:{' '}
+            {Math.round(position.lng)}
+          </Text>
+        )}
+        <Button
+          colorScheme={position && position !== userLocation && 'green'}
+          onClick={addDestination}
+          disabled={position && position !== userLocation ? false : true}
+          isLoading={isLoading}
+          loadingText="Loading"
+        >
+          {position && position !== userLocation
+            ? `Save Location`
+            : `Navigate the map to add a location`}
+        </Button>
+      </VStack>
+    </Flex>
   );
 };
 

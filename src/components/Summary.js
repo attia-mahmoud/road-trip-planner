@@ -5,9 +5,12 @@ import {
   AccordionButton,
   AccordionPanel,
   AccordionIcon,
+  HStack,
 } from '@chakra-ui/react';
 import { Stat, StatLabel, StatNumber, StatHelpText } from '@chakra-ui/react';
 import { Box, Flex, Text, VStack } from '@chakra-ui/layout';
+import { Icon } from '@chakra-ui/icon';
+import { FaStar } from 'react-icons/fa';
 
 const Summary = ({ destinationsState }) => {
   const allDestinations = JSON.parse(localStorage.getItem('my_destinations'));
@@ -20,10 +23,18 @@ const Summary = ({ destinationsState }) => {
             <AccordionItem key={index}>
               <h2>
                 <AccordionButton _expanded={{ fontWeight: '700' }}>
-                  <Box flex="1" textAlign="left">
-                    <Text fontSize="1.3em" m={1.5}>
+                  <Box flex="1" textAlign="left" m="1">
+                  <HStack>
+
+                  <Icon 
+                    as={FaStar}
+                    color="yellow"
+                    visibility={destination.favorite ? "visible" : "hidden"}
+                  />
+                    <Text fontSize="1.2em" m={1.5}>
                       {destination.name}
                     </Text>
+                  </HStack>
                   </Box>
                   <AccordionIcon />
                 </AccordionButton>

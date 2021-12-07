@@ -1,4 +1,10 @@
 .leaflet-container {
-  width: 90vw;
+  width: 50vw;
   height: 70vh;
+}
+
+@media screen and (max-width: 767px) {
+  .leaflet-container {
+    width: 90vw;
+  }
 }
