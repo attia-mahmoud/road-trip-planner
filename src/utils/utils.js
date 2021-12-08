@@ -24,7 +24,7 @@ const saveLocation = async (
   //get the name of the location from LatLng
   let response;
   response = await fetch(
-    'https://us1.locationiq.com/v1/reverse.php?key=pk.ca21e75aad5c139d34f5538f7a25e22d&lat=' +
+    `https://us1.locationiq.com/v1/reverse.php?key=${process.env.REACT_APP_LOCATIONIQ}&lat=` +
       position.lat +
       '&lon=' +
       position.lng +
@@ -37,7 +37,7 @@ const saveLocation = async (
   //get the points of interest
   let POI = [];
   response = await fetch(
-    'https://us1.locationiq.com/v1/nearby.php?key=pk.ca21e75aad5c139d34f5538f7a25e22d&lat=' +
+    `https://us1.locationiq.com/v1/nearby.php?key=${process.env.REACT_APP_LOCATIONIQ}&lat=` +
       position.lat +
       '&lon=' +
       position.lng +
@@ -68,7 +68,7 @@ const saveLocation = async (
         position.lat +
         ',' +
         position.lng +
-        '&travelMode=driving&key=Akc87B_sOcQ8bPAPwTmFAhXmQGzq_kREl-3ZGRJ1UUc438IlNYK6kHvNJJHMv-Rc'
+        `&travelMode=driving&key=${process.env.REACT_APP_BING}`
     ).then(response => response.json()));
 
   const distance =

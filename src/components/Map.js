@@ -35,7 +35,7 @@ const Map = ({ destinationsState, positionState }) => {
   //   get the location name to display the moment user clicks the map
   React.useEffect(() => {
     if (!position) return;
-    setIsLoading(true)
+    setIsLoading(true);
     // setName('Fetching Location Name...');
     const lat = position.lat;
     const lng = position.lng;
@@ -44,7 +44,7 @@ const Map = ({ destinationsState, positionState }) => {
 
     const fetchData = async () => {
       name = await fetch(
-        'https://us1.locationiq.com/v1/reverse.php?key=pk.ca21e75aad5c139d34f5538f7a25e22d&lat=' +
+        `https://us1.locationiq.com/v1/reverse.php?key=${process.env.REACT_APP_LOCATIONIQ}&lat=` +
           lat +
           '&lon=' +
           lng +
@@ -58,7 +58,7 @@ const Map = ({ destinationsState, positionState }) => {
     };
 
     fetchData();
-    setIsLoading(false)
+    setIsLoading(false);
   }, [position]);
 
   function LocationMarker() {
@@ -104,8 +104,8 @@ const Map = ({ destinationsState, positionState }) => {
   }
 
   return (
-    <Flex direction={["column", "row"]} flexBasis="0" justify="space-around">
-      <div id="map" style={{order: 1,}}>
+    <Flex direction={['column', 'row']} flexBasis="0" justify="space-around">
+      <div id="map" style={{ order: 1 }}>
         <MapContainer
           center={{
             lat: 52.52437,
@@ -132,9 +132,16 @@ const Map = ({ destinationsState, positionState }) => {
           <LocationMarker />
         </MapContainer>
       </div>
-      <VStack order={[0, 1]} mb={["10", null]} ml={[null, "10"]} alignSelf="center">
-        <Text  fontSize={[null, "3xl"]}>{!position && 'Choose a location to get started!'}</Text>
-        {name && <Text fontSize={[null, "3xl"]} >{name}</Text>}
+      <VStack
+        order={[0, 1]}
+        mb={['10', null]}
+        ml={[null, '10']}
+        alignSelf="center"
+      >
+        <Text fontSize={[null, '3xl']}>
+          {!position && 'Choose a location to get started!'}
+        </Text>
+        {name && <Text fontSize={[null, '3xl']}>{name}</Text>}
         {position && (
           <Text>
             Latitude: {Math.round(position.lat, 1)}, Longitude:{' '}
